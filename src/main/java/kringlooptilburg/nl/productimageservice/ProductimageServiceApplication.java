@@ -2,7 +2,10 @@ package kringlooptilburg.nl.productimageservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+/**
+ * Epic way to make comments
+ *
+ */
 @SpringBootApplication
 public class ProductimageServiceApplication {
 

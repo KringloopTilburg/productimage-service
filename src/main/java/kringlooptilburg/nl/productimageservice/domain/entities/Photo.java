@@ -1,4 +1,4 @@
-package kringlooptilburg.nl.productimageservice.model;
+package kringlooptilburg.nl.productimageservice.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -14,5 +14,5 @@ public class Photo {
     @Id
     private String id;
     private String title;
-    private String base64;
+    private Binary photo;
 }

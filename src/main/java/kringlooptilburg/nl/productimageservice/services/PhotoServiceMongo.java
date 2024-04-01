@@ -8,8 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 @Service
-public interface PhotoService {
+public interface PhotoServiceMongo {
     String addPhoto(String originalFilename, MultipartFile image) throws IOException;
     List<Photo> findAll();
     Photo getPhoto(String id);
+    void deletePhoto(String id);
 }

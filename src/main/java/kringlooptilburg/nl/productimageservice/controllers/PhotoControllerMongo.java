@@ -1,7 +1,7 @@
 package kringlooptilburg.nl.productimageservice.controllers;
 
 import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
-import kringlooptilburg.nl.productimageservice.services.PhotoService;
+import kringlooptilburg.nl.productimageservice.services.PhotoServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,20 +12,23 @@ import java.util.Base64;
 import java.util.List;
 
 @RestController
-@RequestMapping("/productimage-service")
-public class PhotoController {
+@RequestMapping("/productimage-service-mongo")
+public class PhotoControllerMongo {
     @Autowired
-    private PhotoService photoService;
+    private PhotoServiceMongo photoServiceMongo;
 
     @PostMapping
     public String addPhoto(@RequestParam("image") MultipartFile image) throws IOException {
-        String id = photoService.addPhoto(image.getOriginalFilename(),image);
+        String id = photoServiceMongo.addPhoto(image.getOriginalFilename(), image);
         return id;
     }
-
+    @DeleteMapping("/{id}")
+    public void deletePhoto(@PathVariable String id) {
+        photoServiceMongo.deletePhoto(id);
+    }
     @GetMapping("/{id}")
     public String getPhoto(@PathVariable String id) {
-        Photo photo = photoService.getPhoto(id);
+        Photo photo = photoServiceMongo.getPhoto(id);
         byte[] bytes = photo.getPhoto().getData();
         String s = Base64.getEncoder().encodeToString(bytes);
         return "data:image/png;base64, " + s;
@@ -33,7 +36,7 @@ public class PhotoController {
 
     @GetMapping
     public List<String> getPhotos() {
-        List<Photo> photos = photoService.findAll();
+        List<Photo> photos = photoServiceMongo.findAll();
         ArrayList<String> photoStrings = new ArrayList<>();
         for (var photo : photos) {
             byte[] bytes = photo.getPhoto().getData();

@@ -1,8 +1,9 @@
 version: "1"
 services:
-  mongodb:
+  #  MongoDB
+  mongodb-node1:
     image: mongo:6.0.2
-    container_name: mongodb
+    container_name: mongodb-node1
     restart: always
     ports:
       - 27017:27017
@@ -16,7 +17,7 @@ services:
     image: mongo-express
     container_name: mongo_express
     depends_on:
-      - mongodb
+      - mongodb-node1
     restart: always
     ports:
       - 8085:8081
@@ -25,9 +26,34 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
       ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongodb:27017/
 
+  # ScyllaDB
+  scylla-node1:
+    container_name: scylla-node1
+    ports:
+      - 9042:9042
+    image: scylladb/scylla:5.2.0
+    restart: always
+    environment:
+      CASSANDRA_AUTHENTICATOR: PasswordAuthenticator
+      CASSANDRA_AUTO_BOOTSTRAP: true
+      CASSANDRA_CLUSTER_NAME: MyCluster
+      CASSANDRA_DC: DC1
+      CASSANDRA_RACK: RACK1
+      CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+      CASSANDRA_NUM_TOKENS: 128
+    #    command: --seeds=scylla-node1,scylla-node2 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - scylla:/scylla
+    networks:
+      web:
+
+# Volumes & Network
 volumes:
   data: { }
+  scylla: { }
 
 networks:
   default:
-    name: mongodb_network
+    name: db_network
+  web:
+    driver: bridge

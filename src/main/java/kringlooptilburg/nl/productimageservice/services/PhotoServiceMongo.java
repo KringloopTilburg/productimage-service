@@ -6,11 +6,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface PhotoServiceMongo {
     String addPhoto(String originalFilename, MultipartFile image) throws IOException;
     List<Photo> findAll();
-    Photo getPhoto(String id);
+    Optional<Photo> getPhoto(String id);
     void deletePhoto(String id);
 }

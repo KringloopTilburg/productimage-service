@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PhotoServiceImplMongo implements PhotoServiceMongo {
@@ -36,7 +37,7 @@ public class PhotoServiceImplMongo implements PhotoServiceMongo {
     }
 
     @Override
-    public Photo getPhoto(String id) {
-        return photoRepository.findById(id).get();
+    public Optional<Photo> getPhoto(String id) {
+        return photoRepository.findById(id);
     }
 }

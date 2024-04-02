@@ -13,6 +13,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: password
 
+# express moet nog even gefixt worden, niet super belangrijk - is alleen een GUI
   mongo-express:
     image: mongo-express
     container_name: mongo_express

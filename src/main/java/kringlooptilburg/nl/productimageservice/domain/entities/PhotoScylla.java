@@ -15,4 +15,5 @@ public class PhotoScylla {
     private String id;
     private String title;
     private String base64;
+    private String productId;
 }

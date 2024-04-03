@@ -10,9 +10,8 @@ import java.util.Optional;
 
 @Service
 public interface PhotoServiceMongo {
-    PhotoMongo addPhoto(String originalFilename, MultipartFile image) throws IOException;
-    PhotoMongo addPhotoBody(PhotoMongo photoMongo);
-
+    PhotoMongo addPhoto(String originalFilename, MultipartFile image, String productId) throws IOException;
+//    PhotoMongo addPhotoBody(PhotoMongo photoMongo);
     List<PhotoMongo> findAll();
     Optional<PhotoMongo> getPhoto(String id);
     void deletePhoto(String id);

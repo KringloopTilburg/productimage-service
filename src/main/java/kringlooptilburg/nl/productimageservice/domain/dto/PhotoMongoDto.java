@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PhotoMongoDto {
     private String id;
     private String title;
-    private MultipartFile photo;
+    private Binary photo;
+    //    private MultipartFile photo;
     private String productId;
 }

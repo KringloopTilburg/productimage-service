@@ -32,20 +32,19 @@ public class PhotoControllerMongo {
     @PostMapping
     public ResponseEntity<String> addPhoto(@RequestParam("image") MultipartFile image) throws IOException {
         try {
-            photoServiceMongo.addPhoto(image.getOriginalFilename(), image);
+            photoServiceMongo.addPhoto(image.getOriginalFilename(), image, "testproductidfornowfixlater");
             return new ResponseEntity<>("Photo created.", HttpStatus.CREATED);
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image.");
         }
     }
-    @PostMapping("/phototest")
-    public ResponseEntity<PhotoMongoDto> addPhotoBody(@RequestBody PhotoMongoDto photoMongoDto) throws IOException {
-            PhotoMongo photoMongo = photoMapper.mapFrom(photoMongoDto);
-            photoServiceMongo.addPhotoBody(photoMongo);
-            return new ResponseEntity<>(photoMapper.mapTo(photoMongo), HttpStatus.CREATED);
-    }
-
+//    @PostMapping("/phototest")
+//    public ResponseEntity<PhotoMongoDto> addPhotoBody(@RequestBody PhotoMongoDto photoMongoDto) throws IOException {
+//            PhotoMongo photoMongo = photoMapper.mapFrom(photoMongoDto);
+//            photoServiceMongo.addPhotoBody(photoMongo);
+//            return new ResponseEntity<>(photoMapper.mapTo(photoMongo), HttpStatus.CREATED);
+//    }
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoMongoDto> deletePhoto(@PathVariable String id) throws HttpClientErrorException.NotFound {
         photoServiceMongo.deletePhoto(id);

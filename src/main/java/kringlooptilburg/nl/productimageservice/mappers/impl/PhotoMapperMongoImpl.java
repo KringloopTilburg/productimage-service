@@ -23,24 +23,14 @@ public class PhotoMapperMongoImpl implements Mapper<PhotoMongo, PhotoMongoDto> {
         return modelMapper.map(photoMongo, PhotoMongoDto.class);
     }
 
-//    @Override
-//    public PhotoMongo mapFrom(PhotoMongoDto photoDto) {
-//        return modelMapper.map(photoDto, PhotoMongo.class);
-//    }
-
-    //    @Override
-//    public PhotoMongo mapFrom(PhotoMongoDto photoDto) {
-//        return modelMapper.map(photoDto, PhotoMongo.class);
-//    }
     @Override
     public PhotoMongo mapFrom(PhotoMongoDto photoDto) throws IOException {
-        PhotoMongo photoMongo = new PhotoMongo();
-        photoMongo.setId(photoDto.getId());
-        photoMongo.setProductId(photoDto.getProductId());
-        photoMongo.setTitle(photoDto.getTitle());
-        photoMongo.setPhoto((new Binary(BsonBinarySubType.BINARY,photoDto.getPhoto().getBytes())));
-        return modelMapper.map(photoMongo, PhotoMongo.class);
-
-//        return modelMapper.map(photoDto, PhotoMongo.class);
+//        PhotoMongo photoMongo = new PhotoMongo();
+//        photoMongo.setId(photoDto.getId());
+//        photoMongo.setProductId(photoDto.getProductId());
+//        photoMongo.setTitle(photoDto.getTitle());
+//        photoMongo.setPhoto((new Binary(BsonBinarySubType.BINARY,photoDto.getPhoto().getBytes())));
+//        return modelMapper.map(photoMongo, PhotoMongo.class);
+        return modelMapper.map(photoDto, PhotoMongo.class);
     }
 }

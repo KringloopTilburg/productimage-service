@@ -19,16 +19,17 @@ public class PhotoServiceImplMongo implements PhotoServiceMongo {
     private PhotoRepositoryMongo photoRepository;
 
     @Override
-    public PhotoMongo addPhoto(String originalFilename, MultipartFile image) throws IOException {
+    public PhotoMongo addPhoto(String originalFilename, MultipartFile image, String productId) throws IOException {
         PhotoMongo photoMongo = new PhotoMongo();
         photoMongo.setTitle(originalFilename);
         photoMongo.setPhoto(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
+        photoMongo.setProductId(productId);
         return photoRepository.save(photoMongo);
     }
-    @Override
-    public PhotoMongo addPhotoBody(PhotoMongo photoMongo) {
-        return photoRepository.save(photoMongo);
-    }
+//    @Override
+//    public PhotoMongo addPhotoBody(PhotoMongo photoMongo) {
+//        return photoRepository.save(photoMongo);
+//    }
 
     @Override
     public void deletePhoto(String id) {

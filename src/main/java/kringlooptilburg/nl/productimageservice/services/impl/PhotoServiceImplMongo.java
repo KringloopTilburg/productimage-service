@@ -1,6 +1,6 @@
 package kringlooptilburg.nl.productimageservice.services.impl;
 
-import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
+import kringlooptilburg.nl.productimageservice.domain.entities.PhotoMongo;
 import kringlooptilburg.nl.productimageservice.repository.PhotoRepositoryMongo;
 import kringlooptilburg.nl.productimageservice.services.PhotoServiceMongo;
 import org.bson.BsonBinarySubType;
@@ -19,12 +19,15 @@ public class PhotoServiceImplMongo implements PhotoServiceMongo {
     private PhotoRepositoryMongo photoRepository;
 
     @Override
-    public String addPhoto(String originalFilename, MultipartFile image) throws IOException {
-        Photo photo = new Photo();
-        photo.setTitle(originalFilename);
-        System.out.println("control.file.getBytes:" + image.getBytes());
-        photo.setPhoto(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
-        return photoRepository.save(photo).getId();
+    public PhotoMongo addPhoto(String originalFilename, MultipartFile image) throws IOException {
+        PhotoMongo photoMongo = new PhotoMongo();
+        photoMongo.setTitle(originalFilename);
+        photoMongo.setPhoto(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
+        return photoRepository.save(photoMongo);
+    }
+    @Override
+    public PhotoMongo addPhotoBody(PhotoMongo photoMongo) {
+        return photoRepository.save(photoMongo);
     }
 
     @Override
@@ -32,12 +35,12 @@ public class PhotoServiceImplMongo implements PhotoServiceMongo {
         photoRepository.delete(photoRepository.findById(id).get());
     }
     @Override
-    public List<Photo> findAll() {
+    public List<PhotoMongo> findAll() {
         return photoRepository.findAll();
     }
 
     @Override
-    public Optional<Photo> getPhoto(String id) {
+    public Optional<PhotoMongo> getPhoto(String id) {
         return photoRepository.findById(id);
     }
 }

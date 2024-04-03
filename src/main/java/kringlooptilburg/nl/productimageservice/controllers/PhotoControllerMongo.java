@@ -1,7 +1,7 @@
 package kringlooptilburg.nl.productimageservice.controllers;
 
-import kringlooptilburg.nl.productimageservice.domain.dto.PhotoDto;
-import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
+import kringlooptilburg.nl.productimageservice.domain.dto.PhotoMongoDto;
+import kringlooptilburg.nl.productimageservice.domain.entities.PhotoMongo;
 import kringlooptilburg.nl.productimageservice.mappers.Mapper;
 import kringlooptilburg.nl.productimageservice.services.PhotoServiceMongo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,45 +21,51 @@ import java.util.stream.Collectors;
 public class PhotoControllerMongo {
 
     private final PhotoServiceMongo photoServiceMongo;
-    private final Mapper<Photo, PhotoDto> productMapper;
+    private final Mapper<PhotoMongo, PhotoMongoDto> photoMapper;
 
     @Autowired
-    public PhotoControllerMongo(PhotoServiceMongo photoServiceMongo, Mapper<Photo, PhotoDto> productMapper) {
+    public PhotoControllerMongo(PhotoServiceMongo photoServiceMongo, Mapper<PhotoMongo, PhotoMongoDto> photoMapper) {
         this.photoServiceMongo = photoServiceMongo;
-        this.productMapper = productMapper;
+        this.photoMapper = photoMapper;
     }
 
     @PostMapping
     public ResponseEntity<String> addPhoto(@RequestParam("image") MultipartFile image) throws IOException {
         try {
-            String id = photoServiceMongo.addPhoto(image.getOriginalFilename(), image);
-            return new ResponseEntity<>(id, HttpStatus.CREATED);
+            photoServiceMongo.addPhoto(image.getOriginalFilename(), image);
+            return new ResponseEntity<>("Photo created.", HttpStatus.CREATED);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image.");
         }
+    }
+    @PostMapping("/phototest")
+    public ResponseEntity<PhotoMongoDto> addPhotoBody(@RequestBody PhotoMongoDto photoMongoDto) throws IOException {
+            PhotoMongo photoMongo = photoMapper.mapFrom(photoMongoDto);
+            photoServiceMongo.addPhotoBody(photoMongo);
+            return new ResponseEntity<>(photoMapper.mapTo(photoMongo), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PhotoDto> deletePhoto(@PathVariable String id) throws HttpClientErrorException.NotFound {
+    public ResponseEntity<PhotoMongoDto> deletePhoto(@PathVariable String id) throws HttpClientErrorException.NotFound {
         photoServiceMongo.deletePhoto(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PhotoDto> getPhoto(@PathVariable String id) {
-        Optional<Photo> foundPhoto = photoServiceMongo.getPhoto(id);
+    public ResponseEntity<PhotoMongoDto> getPhoto(@PathVariable String id) {
+        Optional<PhotoMongo> foundPhoto = photoServiceMongo.getPhoto(id);
         return foundPhoto.map(photo -> {
-            PhotoDto photoDto = productMapper.mapTo(photo);
+            PhotoMongoDto photoDto = photoMapper.mapTo(photo);
             return new ResponseEntity<>(photoDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping
-    public List<PhotoDto> getPhotos() {
-        List<Photo> photos = photoServiceMongo.findAll();
-        return photos.stream()
-                .map(productMapper::mapTo)
+    public List<PhotoMongoDto> getPhotos() {
+        List<PhotoMongo> photoMongos = photoServiceMongo.findAll();
+        return photoMongos.stream()
+                .map(photoMapper::mapTo)
                 .collect(Collectors.toList());
     }
 }

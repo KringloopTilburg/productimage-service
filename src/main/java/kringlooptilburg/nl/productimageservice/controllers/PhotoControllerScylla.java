@@ -1,11 +1,8 @@
 package kringlooptilburg.nl.productimageservice.controllers;
 
-import kringlooptilburg.nl.productimageservice.domain.dto.PhotoDto;
 import kringlooptilburg.nl.productimageservice.domain.dto.PhotoScyllaDto;
-import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
 import kringlooptilburg.nl.productimageservice.domain.entities.PhotoScylla;
 import kringlooptilburg.nl.productimageservice.mappers.Mapper;
-import kringlooptilburg.nl.productimageservice.services.PhotoServiceMongo;
 import kringlooptilburg.nl.productimageservice.services.PhotoServiceScylla;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +31,7 @@ public class PhotoControllerScylla {
     public ResponseEntity<String> addPhoto(@RequestParam("image") MultipartFile image) {
         try {
             photoServiceScylla.addPhoto(image.getOriginalFilename(), image);
-            return new ResponseEntity<>("Photo uploaded.", HttpStatus.CREATED);
+            return new ResponseEntity<>("PhotoScylla uploaded.", HttpStatus.CREATED);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +50,6 @@ public class PhotoControllerScylla {
             PhotoScyllaDto photoScyllaDto = productMapper.mapTo(photoScylla);
             return new ResponseEntity<>(photoScyllaDto, HttpStatus.OK);
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//        return "data:image/png;base64, " + photo.getBase64();
     }
 
     @GetMapping

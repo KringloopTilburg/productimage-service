@@ -23,4 +23,3 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
         return 9042;
     }
 }
-

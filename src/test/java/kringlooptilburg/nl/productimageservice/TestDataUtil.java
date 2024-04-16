@@ -1,22 +1,22 @@
 package kringlooptilburg.nl.productimageservice;
 
-import kringlooptilburg.nl.productimageservice.domain.entities.PhotoScylla;
+import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
 
-public class TestDataScyllaUtil {
+public class TestDataUtil {
 
-    private TestDataScyllaUtil(){
+    private TestDataUtil(){
     }
 
-    public static PhotoScylla createTestPhotoEntityA() {
-        return PhotoScylla.builder()
+    public static Photo createTestPhotoEntityA() {
+        return Photo.builder()
                 .id("STRING_ID1")
                 .productId("1")
                 .base64("base64abc")
                 .title("Test Title A")
                 .build();
     }
-    public static PhotoScylla createTestPhotoEntityB() {
-        return PhotoScylla.builder()
+    public static Photo createTestPhotoEntityB() {
+        return Photo.builder()
                 .id("STRING_ID2")
                 .productId("2")
                 .base64("base64xyz")

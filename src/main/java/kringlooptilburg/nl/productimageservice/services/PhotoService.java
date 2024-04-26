@@ -18,4 +18,6 @@ public interface PhotoService {
     Optional<Photo> getPhoto(String id);
 
     void deletePhoto(String id);
+
+    List<Photo> findByProductIds(List<Integer> productIds);
 }

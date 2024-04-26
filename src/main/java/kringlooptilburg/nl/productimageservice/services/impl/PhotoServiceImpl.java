@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PhotoServiceImpl implements PhotoService {
@@ -33,6 +30,19 @@ public class PhotoServiceImpl implements PhotoService {
     public void deletePhoto(String id) {
         photoRepository.delete(photoRepository.findById(id).get());
     }
+
+    @Override
+    public List<Photo> findByProductIds(List<Integer> productIds) {
+        List<Photo> photos = new ArrayList<>();
+        for (Integer productId : productIds) {
+            Photo photo = photoRepository.findSinglePhotoByProductId(productId);
+            if (photo != null) {
+                photos.add(photo);
+            }
+        }
+        return photos;
+    }
+
     @Override
     public List<Photo> findAll() {
         return photoRepository.findAll();

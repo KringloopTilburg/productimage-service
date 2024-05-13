@@ -10,7 +10,7 @@ public class TestDataUtil {
     public static Photo createTestPhotoEntityA() {
         return Photo.builder()
                 .id("STRING_ID1")
-                .productId("1")
+                .productId(1)
                 .base64("base64abc")
                 .title("Test Title A")
                 .build();
@@ -18,7 +18,7 @@ public class TestDataUtil {
     public static Photo createTestPhotoEntityB() {
         return Photo.builder()
                 .id("STRING_ID2")
-                .productId("2")
+                .productId(2)
                 .base64("base64xyz")
                 .title("Test Title B")
                 .build();

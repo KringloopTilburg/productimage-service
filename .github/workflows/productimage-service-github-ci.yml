@@ -1,6 +1,8 @@
 on:
   push:
-    branches: [ "dev", "schaalbaarheid" ]
+    branches:
+    - dev
+    - schaalbaarheid
     tags:
       - '*'
   pull_request:

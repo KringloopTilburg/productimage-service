@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productimage-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productimage-service
+  template:
+    metadata:
+      labels:
+        app: productimage-service
+    spec:
+      containers:
+        - name: productimage-service
+          image: <imagefromdockerhub>
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80

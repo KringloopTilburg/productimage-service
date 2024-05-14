@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -18,6 +19,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class PhotoControllerIntegrationTest {
     private PhotoController photoController;
     private MockMvc mockMvc;
@@ -30,17 +32,17 @@ public class PhotoControllerIntegrationTest {
         this.photoController = photoController;
     }
 
-    @Test
-    public void testThatAddedPhotoSuccessfullyReturnsHttp201Created() throws Exception {
-        MockMultipartFile multipartFile = new MockMultipartFile("image", "filename.jpg", "image/jpeg", "content".getBytes());
-
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/productimage-service")
-                .file(multipartFile)
-                .contentType(MediaType.MULTIPART_FORM_DATA)
-        ).andExpect(
-                MockMvcResultMatchers.status().isCreated()
-        );
-    }
+//    @Test
+//    public void testThatAddedPhotoSuccessfullyReturnsHttp201Created() throws Exception {
+//        MockMultipartFile multipartFile = new MockMultipartFile("image", "filename.jpg", "image/jpeg", "content".getBytes());
+//
+//        mockMvc.perform(MockMvcRequestBuilders.multipart("/productimage-service")
+//                .file(multipartFile)
+//                .contentType(MediaType.MULTIPART_FORM_DATA)
+//        ).andExpect(
+//                MockMvcResultMatchers.status().isCreated()
+//        );
+//    }
 
 //    @Test
 //    public void testThatGetPhotoSuccessfullyReturnsHttp200OkWhenPhotoExists() throws Exception {

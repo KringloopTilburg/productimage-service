@@ -20,8 +20,8 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
           
-      # - name: Run tests in pipeline
-        # run: mvn test
+      - name: Run tests in pipeline
+        run: mvn test
       
       - name: Build and package JAR
         run: mvn -B package --file pom.xml
@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-app
-          path: target/productimageservice.jar
+          path: target/productimage-service.jar
 
   push_to_registry:
     needs: build
@@ -62,5 +62,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: vandalen/kringlooptilburg-productimageservice:test
-          build-args: JAR_FILE=./productservice.jar
+          tags: vandalen/kringlooptilburg-productimageservice:productimage
+          build-args: JAR_FILE=./productimage-service.jar

@@ -11,18 +11,10 @@ import com.datastax.driver.core.Cluster;
 @EnableCassandraRepositories
 public class CassandraConfiguration extends AbstractCassandraConfiguration {
 
-//    @Override
-//    public String getContactPoints() {
-//        return "127.0.0.1";
-//    }
     @Override
     protected String getKeyspaceName() {
         return "productimages";
     }
-//    @Override
-//    protected int getPort() {
-//        return 9042;
-//    }
 
     @Bean
     public Cluster cluster() {

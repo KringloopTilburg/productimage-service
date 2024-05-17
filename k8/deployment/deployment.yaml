@@ -14,10 +14,25 @@ spec:
     spec:
       containers:
         - name: productimage-service
-          image: <imagefromdockerhub>
+          image: vandalen/kringlooptilburg-productimageservice:test
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8083
+            initialDelaySeconds: 180
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8083
+            initialDelaySeconds: 180
+            periodSeconds: 15
           resources:
+            requests:
+              cpu: "400m"
+              memory: "256Mi"
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              cpu: "600m"
+              memory: "768Mi"
           ports:
-            - containerPort: 80
+            - containerPort: 8083

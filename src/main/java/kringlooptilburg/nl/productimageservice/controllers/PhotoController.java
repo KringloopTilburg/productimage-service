@@ -1,6 +1,7 @@
 package kringlooptilburg.nl.productimageservice.controllers;
 
 import kringlooptilburg.nl.productimageservice.domain.dto.PhotoDto;
+import kringlooptilburg.nl.productimageservice.domain.dto.ProductIdsRequest;
 import kringlooptilburg.nl.productimageservice.domain.entities.Photo;
 import kringlooptilburg.nl.productimageservice.mappers.Mapper;
 import kringlooptilburg.nl.productimageservice.services.PhotoService;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/productimage-service")
@@ -42,6 +44,27 @@ public class PhotoController {
         }
     }
 
+    @PostMapping("/products/images")
+    public ResponseEntity<List<PhotoDto>> getImagesForProducts(@RequestBody ProductIdsRequest request) {
+        var productIds = request.getProductIds();
+
+        var photos = photoService.findByProductIds(productIds);
+
+        var photoDtos = mapToDtoList(photos);
+
+        return ResponseEntity.ok().body(photoDtos);
+    }
+
+//    @GetMapping
+//    public ResponseEntity<List<PhotoDto>> getPhotos(@RequestParam(value = "productId") List<Integer> productIds) {
+//
+//        var photos = photoService.findByProductIds(productIds);
+//
+//        var photoDtos = mapToDtoList(photos);
+//
+//        return ResponseEntity.ok().body(photoDtos);
+//    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoDto> deletePhoto(@PathVariable String id) {
         photoService.deletePhoto(id);
@@ -56,13 +79,9 @@ public class PhotoController {
         }).orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping
-    public List<String> getPhotos() {
-        List<Photo> photos = photoService.findAll();
-        ArrayList<String> photoStrings = new ArrayList<>();
-        for (var photo : photos) {
-            photoStrings.add("data:image/png;base64, " + photo.getBase64());
-        }
-        return photoStrings;
+    private List<PhotoDto> mapToDtoList(List<Photo> photos) {
+        return photos.stream()
+                .map(productMapper::mapTo)
+                .collect(Collectors.toList());
     }
 }

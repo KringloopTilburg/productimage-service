@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhotoScyllaDto {
+public class PhotoDto {
     private String id;
     private String title;
     private String base64;
-    private String productId;
+    private Integer productId;
 }

@@ -10,10 +10,10 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PhotoScylla {
+public class Photo {
     @Id
     private String id;
     private String title;
     private String base64;
-    private String productId;
+    private Integer productId;
 }

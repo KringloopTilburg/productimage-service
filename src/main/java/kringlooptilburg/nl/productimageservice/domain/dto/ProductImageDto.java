@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.Binary;
-import org.springframework.web.multipart.MultipartFile;
+
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PhotoMongoDto {
-    private String id;
+public class ProductImageDto implements Serializable {
+    private Integer productId;
     private String title;
-    private Binary photo;
-    //    private MultipartFile photo;
-    private String productId;
+    private byte[] image;
 }

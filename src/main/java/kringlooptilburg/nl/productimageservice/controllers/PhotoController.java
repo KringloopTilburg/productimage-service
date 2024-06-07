@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,21 +54,12 @@ public class PhotoController {
         return ResponseEntity.ok().body(photoDtos);
     }
 
-//    @GetMapping
-//    public ResponseEntity<List<PhotoDto>> getPhotos(@RequestParam(value = "productId") List<Integer> productIds) {
-//
-//        var photos = photoService.findByProductIds(productIds);
-//
-//        var photoDtos = mapToDtoList(photos);
-//
-//        return ResponseEntity.ok().body(photoDtos);
-//    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<PhotoDto> deletePhoto(@PathVariable String id) {
         photoService.deletePhoto(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<PhotoDto> getPhoto(@PathVariable String id) {
         Optional<Photo> foundPhoto = photoService.getPhoto(id);

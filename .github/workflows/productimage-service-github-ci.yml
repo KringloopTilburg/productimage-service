@@ -1,11 +1,4 @@
-on:
-  push:
-    branches: ["dev", "feature/schaalbaarheid"]
-    tags:
-      - '*'
-  pull_request:
-    branches: [ "main" ]
-
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -53,14 +46,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: List files and directories
-        run: ls -l
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: vandalen/kringlooptilburg-productimageservice:productimage
+          tags: kringloopfontysproject/k013project:productimage
           build-args: JAR_FILE=./productimage-service.jar

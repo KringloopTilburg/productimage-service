@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: productimage-service
-          image: vandalen/kringlooptilburg-productimageservice:test
+          image: kringloopfontysproject/k013project:productimage
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
